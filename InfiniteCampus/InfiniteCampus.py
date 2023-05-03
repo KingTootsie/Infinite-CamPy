@@ -4,7 +4,7 @@ import time
 from . import InfiniteCampusExceptions
 
 #NOTE: Sessions expire after 1 hour of inactivity
-class InfiniteCampus():
+class InfiniteCampus(object):
     def __init__(self) -> None:
         self.session = requests.session()
         self.district_data = None
@@ -15,6 +15,10 @@ class InfiniteCampus():
         self.Calendar = InfiniteCampus.Calendar(infinite_campus_self=self)
 
     def _authentication_check(self):
+        """
+        Called in all functions to make sure the session hasn't expired.
+        Do not invoke this on your own.
+        """
         current_time = time.time()
 
         if self.last_interaction_timestamp is None:
@@ -104,6 +108,13 @@ class InfiniteCampus():
             self.infinite_campus_self: InfiniteCampus = infinite_campus_self
 
         def fetch_student(self):
+            """
+            Raises:
+                InfiniteCampusExceptions.LoginExceptions.NotLoggedInError: Session has not been logged into.
+
+            Returns:
+                dictionary: Returns json information on student account.
+            """
             if not self.infinite_campus_self.logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
             
@@ -126,13 +137,8 @@ class InfiniteCampus():
             district_site = self.infinite_campus_self.district_data["district_baseurl"]
             account_response = self.infinite_campus_self.session.get(f"{district_site}resources/my/userAccount")
             account_response_json = account_response.json()
+
             return account_response_json
-            
-        def fetch_today(self):
-            if not self.infinite_campus_self.logged_in:
-                raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
-            
-            self.infinite_campus_self._authentication_check()
             
         def fetch_attendance(self):
             if not self.infinite_campus_self.logged_in:
@@ -205,6 +211,22 @@ class InfiniteCampus():
             recent_grades = self.infinite_campus_self.session.get(f"{district_site}api/portal/assignment/recentlyGraded?modifiedDate={date_string}T00:00:00").json()
 
             return recent_grades
+        
+        def fetch_class(self, class_name: str, term:int):
+            if not self.infinite_campus_self.logged_in:
+                raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
+            
+            self.infinite_campus_self._authentication_check()
+
+            district_site = self.infinite_campus_self.district_data["district_baseurl"]
+            grades_json_response = self.infinite_campus_self.session.get(f"{district_site}resources/portal/grades").json()
+            
+            classes = grades_json_response[0]["terms"][term - 1]["courses"]
+
+            for class_json in classes:
+                name = class_json["courseName"]
+                if class_name in name:
+                    return class_json
 
     class Calendar():
         def __init__(self, infinite_campus_self) -> None:
@@ -216,6 +238,44 @@ class InfiniteCampus():
             
             self.infinite_campus_self._authentication_check()
 
-            calendar_json = self.infinite_campus_self.session.get("https://siouxfallssd.infinitecampus.org/campus/resources/calendar/instructionalDay?calendarID=2137").json()
-            #https://siouxfallssd.infinitecampus.org/campus/resources/calendar/instructionalDay?trialID=824
+            district_site = self.infinite_campus_self.district_data["district_baseurl"]
+
+            student_info_json = self.infinite_campus_self.session.get(f"{district_site}api/portal/students").json()
+
+            calendar_id = student_info_json[0]["enrollments"][0]["calendarID"]
+
+            calendar_json = self.infinite_campus_self.session.get(f"{district_site}resources/calendar/instructionalDay?calendarID={calendar_id}").json()
+
+            is_error = "errors" in calendar_json
+
+            if is_error is True:
+                error_message = calendar_json["errors"][0]["message"]
+
+                raise InfiniteCampusExceptions.CalendarExceptions.APIException(f"The following error message was given by the Infinite Campus API:\n {error_message}")
+            
+            return calendar_json
+        
+        def fetch_day(self, date: str):
+            """date is in (YYYY-MM-DD) format"""
+
+            if not self.infinite_campus_self.logged_in:
+                raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
+            
+            self.infinite_campus_self._authentication_check()
+
+            district_site = self.infinite_campus_self.district_data["district_baseurl"]
+
+            student_info_json = self.infinite_campus_self.session.get(f"{district_site}api/portal/students").json()
+
+            calendar_id = student_info_json[0]["enrollments"][0]["calendarID"]
+
+            calendar_json = self.infinite_campus_self.session.get(f"{district_site}resources/calendar/instructionalDay?calendarID={calendar_id}&date={date}").json()
+
+            is_error = "errors" in calendar_json
+
+            if is_error is True:
+                error_message = calendar_json["errors"][0]["message"]
+
+                raise InfiniteCampusExceptions.CalendarExceptions.APIException(f"The following error message was given by the Infinite Campus API:\n {error_message}")
+
             return calendar_json

@@ -24,3 +24,9 @@ class AuthorizationExceptions:
         def __init__(self, message = "This session has expired because it has gone 1 hour without activity.", *args: object) -> None:
             super().__init__(message, *args)
             self.message = message
+
+class CalendarExceptions:
+    class APIException(Exception):
+        def __init__(self, message, *args: object) -> None:
+            super().__init__(message, *args)
+            self.message = message
