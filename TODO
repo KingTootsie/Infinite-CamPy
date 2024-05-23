@@ -4,3 +4,9 @@
 2a. grades.get_course() doesn't consider multiple schools.
 
 3. grades.get_terms() doesn't consider multiple schools.
+
+4. Add more to category object
+
+5. fix schoolObjects so that all the objects follow a coherent theme in structure.
+
+6. Add category weight.

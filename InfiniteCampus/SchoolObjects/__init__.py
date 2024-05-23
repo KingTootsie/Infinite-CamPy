@@ -1,3 +1,4 @@
+from infinitecampus.SchoolObjects.enrollment import Enrollment
 from infinitecampus.SchoolObjects.term import Term
 from infinitecampus.SchoolObjects.course import Course
 from infinitecampus.SchoolObjects.task import Task

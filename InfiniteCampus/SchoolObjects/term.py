@@ -1,8 +1,10 @@
 from datetime import datetime
-from typing import (List, TYPE_CHECKING)
+from typing import (List, Union, TYPE_CHECKING)
 from infinitecampus import InfiniteCampusExceptions
+
 if TYPE_CHECKING:
-    from infinitecampus.SchoolObjects.course import Course
+    from enrollment import Enrollment
+    from course import Course
 
 
 
@@ -12,17 +14,24 @@ class Term(object):
     """
     def __init__(
         self, 
+
+        enrollment: Enrollment,
+
         term_name: str, 
         term_id: int, 
         start_date: str, 
         end_date: str, 
-        courses,
+        
+        courses: Union[List[Course], None],
     ) -> None:
+        self.enrollment: Enrollment = enrollment
+
         self.name: str = term_name
         self.id: int = term_id
         self.start_date: datetime = datetime.fromisoformat(start_date)
         self.end_date: datetime = datetime.fromisoformat(end_date)
-        self.courses: list[Course] = courses
+
+        self.courses: Union[List[Course], None] = courses
 
     def fetch_course(self, query: str, search_type):
         if search_type == "name":

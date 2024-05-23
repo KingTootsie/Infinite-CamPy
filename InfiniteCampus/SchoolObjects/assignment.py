@@ -2,18 +2,23 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from enrollment import Enrollment
     from term import Term
     from course import Course
-    from category import Category
+    from category import Task
     from category import Category
 
 class Assignment(object):
     """Represents an assignment in an IC course."""
     def __init__(
         self, 
-        term, 
-        course, 
-        category, 
+
+        enrollment: Enrollment,
+        term: Term, 
+        course: Course, 
+        task: Task,
+        category: Category, 
+        
         assignment_name: str, 
         points_earned: float, 
         max_points: float, 
@@ -23,9 +28,12 @@ class Assignment(object):
         cheated: bool, 
         dropped: bool
     ) -> None:
+        self.enrollment: Enrollment = enrollment
         self.term: Term = term
         self.course: Course = course
+        self.task: Task = task
         self.category: Category = category
+        
         self.name = assignment_name
         self.points_earned = points_earned
         self.max_points = max_points
