@@ -1,3 +1,7 @@
+import os.path
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 class LoginExceptions:
     class NotLoggedInError(Exception):
         def __init__(self, message = "User has not logged in.", *args: object) -> None:
@@ -28,5 +32,11 @@ class AuthorizationExceptions:
 class CalendarExceptions:
     class APIException(Exception):
         def __init__(self, message, *args: object) -> None:
+            super().__init__(message, *args)
+            self.message = message
+
+class SearchExceptions:
+    class CourseIDMustBeInteger(Exception):
+        def __init__(self, message = "Non-numerical characters included in query string.", *args: object) -> None:
             super().__init__(message, *args)
             self.message = message
