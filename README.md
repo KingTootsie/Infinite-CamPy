@@ -8,7 +8,7 @@ How to use:
 ic = client.client()
 
 #Log into a IC portal
-ic.login("123456", "123456", "Vermont", "VT")
+ic.login("username", "password", "Vermont", "VT")
 
 grades = ic.Grades.fetch_grades()
 

@@ -1,0 +1,6 @@
+1. Implement different schools.
+
+2. grades.get_course() might be broken.
+2a. grades.get_course() doesn't consider multiple schools.
+
+3. grades.get_terms() doesn't consider multiple schools.

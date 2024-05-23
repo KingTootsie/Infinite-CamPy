@@ -14,7 +14,9 @@ class Grades():
             #Gets called before logging in
             #Saves the most recent get_terms() call
 
+        #NOT IMPLEMENTED YET.
         def get_terms(self):
+            """Gets the terms for a specified school."""
             if not self.client._logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
             
@@ -103,7 +105,9 @@ class Grades():
                 current_term.courses = course_list
             return terms
         
+        
         def get_course(self, query: str, search_type):
+            """Fetches a course """
             terms = self.get_terms()
 
             #NAME_SEARCH
@@ -122,7 +126,18 @@ class Grades():
                     else:
                         return None
 
-        def fetch_grades(self):
+        def fetch_grades(self) -> dict:
+            """
+            WARNING! NOT PORTED TO V2, RETURNS RAW JSON!
+
+            Responsible for getting the raw JSON for grades.
+
+            Raises:
+                InfiniteCampusExceptions.LoginExceptions.NotLoggedInError: User isn't logged in.
+
+            Returns:
+                dict: JSON
+            """
             if not self.client._logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
             
@@ -134,6 +149,11 @@ class Grades():
             return grades_json_response
         
         def fetch_grade_book_updates(self):
+            """
+            WARNING! NOT PORTED TO V2, RETURNS RAW JSON!
+
+            Fetches gradebook updates for the day."""
+
             if not self.client._logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
             
@@ -173,7 +193,7 @@ class Grades():
             return recent_grades
         
         
-        def fetch_class(self, class_name: str, term:int):
+        def fetch_class(self, class_name: str, term:int) -> dict:
             if not self.client._logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
             
