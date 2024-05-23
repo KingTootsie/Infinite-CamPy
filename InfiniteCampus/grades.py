@@ -90,7 +90,7 @@ class Grades():
                                     category=current_category,
                                     assignment_name=assignment["assignmentName"],
                                     points_earned=float(assignment["score"]) if assignment["score"] is not None else None,
-                                    max_points=assignment["totalPoints"],
+                                    max_points=float(assignment["totalPoints"]) if assignment["score"] is not None else None,
                                     not_graded=assignment["notGraded"],
                                     late=assignment["late"],
                                     missing=assignment["missing"],

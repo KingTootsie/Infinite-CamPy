@@ -29,6 +29,7 @@ class Assignment(object):
         self.name = assignment_name
         self.points_earned = points_earned
         self.max_points = max_points
+        self.percent = round((self.points_earned / self.max_points) * 100, 2) if self.points_earned is not None and self.max_points is not None and self.max_points != 0 else None
         self.not_graded = not_graded
         self.late = late
         self.missing = missing
