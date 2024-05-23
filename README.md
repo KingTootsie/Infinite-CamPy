@@ -1,7 +1,8 @@
 # Infinite-CamPy
-A simple python wrapper for the student end of Infinite Campus
+A simple python wrapper for the student end of Infinite Campus.
 
 How to use:
+
 `
 #Initialize a new client instance
 ic = client.client()

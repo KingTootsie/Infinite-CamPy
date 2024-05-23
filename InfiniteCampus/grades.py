@@ -56,13 +56,11 @@ class Grades():
                     tasks_json = self.client.http.fetch_course_details(sectionID=current_course.section_id)
                     #print(tasks_json)
                     for task in tasks_json["details"]:
-                        percent = task.get("task").get("progressPercent")
-
                         current_task = Task(
                             term=current_term, 
                             course=current_course, 
                             task_name=task["task"]["taskName"], 
-                            task_percent=percent,
+                            task_percent=task["task"].get("percent"),
                             points_earned=task["task"].get("progressPointsEarned"),
                             total_points=task["task"].get("progressTotalPoints"),
                             categories=[] if len(task["categories"]) > 0 else None
@@ -123,7 +121,6 @@ class Grades():
                         return course
                     else:
                         return None
-        
 
         def fetch_grades(self):
             if not self.client._logged_in:
@@ -189,5 +186,6 @@ class Grades():
 
             for class_json in classes:
                 name = class_json["courseName"]
+                
                 if class_name in name:
                     return class_json
