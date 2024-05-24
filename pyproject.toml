@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Infinite Campus API Wrapper"
+version = "0.0.1"
+authors = [
+  { name="King Tootsie", email="kingtootsietechnology@protonmail.com" },
+]
+description = "A simple synchronous package for interacting with the student end of Infinite Campus "
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/KingTootsie/Infinite-CamPy"
+Issues = "https://github.com/KingTootsie/Infinite-CamPy/issues"
