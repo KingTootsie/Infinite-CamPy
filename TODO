@@ -1,5 +1,3 @@
-1. Implement different schools.
-
 2. grades.get_course() might be broken.
 2a. grades.get_course() doesn't consider multiple schools.
 
@@ -10,3 +8,5 @@
 5. fix schoolObjects so that all the objects follow a coherent theme in structure.
 
 6. Add category weight.
+
+- Prevent school objects from being run like normal things

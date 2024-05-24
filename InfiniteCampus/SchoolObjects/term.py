@@ -6,8 +6,6 @@ if TYPE_CHECKING:
     from enrollment import Enrollment
     from course import Course
 
-
-
 class Term(object):
     """Represents a part of the school year.\n
     Most schools use a semester system (2 terms) but this'll change depending on school.
@@ -15,14 +13,14 @@ class Term(object):
     def __init__(
         self, 
 
-        enrollment: Enrollment,
+        enrollment,
 
         term_name: str, 
         term_id: int, 
         start_date: str, 
         end_date: str, 
         
-        courses: Union[List[Course], None],
+        courses
     ) -> None:
         self.enrollment: Enrollment = enrollment
 

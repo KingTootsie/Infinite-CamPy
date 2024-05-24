@@ -18,14 +18,14 @@ class Category(object):
     def __init__(
         self,
 
-        enrollment: Enrollment,
-        term: Term,
-        course: Course,
-        task: Task, 
+        enrollment,
+        term,
+        course,
+        task, 
 
         category_name: str, 
 
-        assignments: List[Assignment]
+        assignments
     ) -> None:
         self.enrollment: Enrollment = enrollment
         self.term: Term = term

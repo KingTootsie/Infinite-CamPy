@@ -9,8 +9,8 @@ class Course(object):
     def __init__(
         self, 
 
-        enrollment: Enrollment,
-        term: Term,
+        enrollment,
+        term,
 
         course_name: str, 
         course_id: int,
@@ -20,7 +20,7 @@ class Course(object):
         school_name: str, 
         dropped: bool,
 
-        tasks: List[Task],
+        tasks,
     ) -> None:
         self.enrollment: Enrollment = enrollment
         self.term: Term = term #An attribute that refers to the parent Term object.

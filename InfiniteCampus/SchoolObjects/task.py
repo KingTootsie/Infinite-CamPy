@@ -15,16 +15,16 @@ class Task(object):
     def __init__(
         self, 
 
-        enrollment: Enrollment,
-        term: Term,
-        course: Course,
+        enrollment,
+        term,
+        course,
 
         task_name: str, 
         task_percent: Union[float, None], 
         points_earned: Union[float, None],
         total_points: Union[float, None], 
 
-        categories: Union[List[Category], None]
+        categories
     ) -> None:
         self.enrollment: Enrollment = enrollment,
         self.term: Term = term

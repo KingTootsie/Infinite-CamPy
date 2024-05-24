@@ -13,11 +13,11 @@ class Assignment(object):
     def __init__(
         self, 
 
-        enrollment: Enrollment,
-        term: Term, 
-        course: Course, 
-        task: Task,
-        category: Category, 
+        enrollment,
+        term, 
+        course, 
+        task,
+        category, 
         
         assignment_name: str, 
         points_earned: float, 

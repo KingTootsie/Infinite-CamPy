@@ -1,5 +1,6 @@
 from typing import (List, Union, TYPE_CHECKING)
 from datetime import datetime, date
+from infinitecampus import InfiniteCampusExceptions
 
 if TYPE_CHECKING:
     from term import Term
@@ -20,7 +21,7 @@ class Enrollment(object):
         assignments_enabled: bool,
         grading_key_enabled: bool, #This either.
 
-        terms: List[Term],
+        terms,
     ) -> None:
         self.name: str = enrollment_name
         self.id: int = enrollment_id
@@ -32,7 +33,7 @@ class Enrollment(object):
         self.assignments_enabled: bool = assignments_enabled
         self.grading_key_enabled: bool = grading_key_enabled
 
-        self.terms: List[Term] = terms
+        self.terms: list[Term] = terms
 
     def __repr__(self) -> str:
         return self.name

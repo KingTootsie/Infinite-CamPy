@@ -14,7 +14,7 @@ class Grades():
             #Gets called before logging in
             #Saves the most recent get_terms() call
         
-        def get_enrollments(self):
+        def get_enrollments(self) -> list[Enrollment]:
             """
             Gets the enrollments (schools).
             
@@ -31,7 +31,7 @@ class Grades():
             enrollments_list: list[Enrollment] = []
             for enrollment in grades_json:
                 current_enrollment = Enrollment(
-                    enrollment_name=enrollment["name"],
+                    enrollment_name=enrollment["displayName"],
                     enrollment_id=enrollment["enrollmentID"],
                     calendar_id=enrollment["calendarID"],
                     school_id=enrollment["schoolID"],
@@ -126,7 +126,7 @@ class Grades():
                                         course=current_course,
                                         task=current_task,
                                         category=current_category,
-                                        
+
                                         assignment_name=assignment["assignmentName"],
                                         points_earned=float(assignment["score"]) if assignment["score"] is not None else None,
                                         max_points=float(assignment["totalPoints"]) if assignment["score"] is not None else None,
@@ -144,7 +144,6 @@ class Grades():
                     current_term.courses = course_list
                 current_enrollment.terms = terms_list
             return enrollments_list
-        
         
         def get_course(self, query: str, search_type):
             """Fetches a course """
