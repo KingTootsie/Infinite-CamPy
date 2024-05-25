@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 from infinitecampus import InfiniteCampusExceptions
-from infinitecampus.SchoolObjects.calendarObjects.day import Day
+from infinitecampus.schoolObjects.calendarObjects.day import Day
 
 if TYPE_CHECKING:
     from .client import Client

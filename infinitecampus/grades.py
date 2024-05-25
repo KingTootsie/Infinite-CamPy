@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 import datetime, time
 from infinitecampus import InfiniteCampusExceptions
 #from infinitecampus import (NAME_SEARCH, COURSE_ID_SEARCH)
-from infinitecampus.SchoolObjects import *
+from infinitecampus.schoolObjects import *
 
 if TYPE_CHECKING:
     from .client import Client
