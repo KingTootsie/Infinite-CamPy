@@ -23,6 +23,11 @@ class LoginExceptions:
             super().__init__(message, *args)
             self.message = message
 
+    class InvalidState(Exception):
+        def __init__(self, message = "Provided state is invalid.", *args: object) -> None:
+            super().__init__(message, *args)
+            self.message = message
+
 class AuthorizationExceptions:
     class SessionHasExpired(Exception):
         def __init__(self, message = "This session has expired because it has gone 1 hour without activity.", *args: object) -> None:

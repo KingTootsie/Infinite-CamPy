@@ -1,11 +1,19 @@
 import requests
 import datetime
 import time
+
+from typing import TypeAlias, Literal
+
 from infinitecampus import InfiniteCampusExceptions
 from infinitecampus.grades import Grades
 from infinitecampus.calendar import Calendar
 from infinitecampus.student import Student
 from infinitecampus.http_manager import Http
+from infinitecampus.states import *
+
+state_abbreviations = ["AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "MP", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VI", "WA", "WI", "WV", "WY"]
+State: TypeAlias = Literal["AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "MP", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VI", "WA", "WI", "WV", "WY"]
+
 
 #NOTE: Sessions expire after 1 hour of inactivity
 class Client(object):
@@ -35,7 +43,7 @@ class Client(object):
             self.http.last_interaction_timestamp = current_time
     
     
-    def log_in(self, username: str, password: str, district_name: str, state_abbreviation: str) -> bool:
+    def log_in(self, username: str, password: str, district_name: str, state: State) -> bool:
         """
         Logs into a student campus portal.
 
@@ -43,13 +51,13 @@ class Client(object):
         - username (string): The username for the student.
         - password (string): The password for the student.
         - district_name (string): This is the name of the school district. Ex: "Central Vermont Career Center School District"
-        - state_abbreviation (string): The abbreviation for the school district's state. Ex: Vermont --> VT
+        - state (State): The abbreviation for the school district's state (or province).\n Ex: Vermont --> VT
 
         Output:
         - Boolean: True if logging in was successful.
 
         Operations:
-        - Inputs district_name and state_addreviation are used to request district information. 
+        - Inputs district_name and state are used to request district information. 
         - This district info is then stored and used for all future wrapper and api operations.
         - A request is then made to log in. All cookies are stored in the session being used.
         - Then it checks if the log in was successful, and if it is, returns True.
@@ -57,7 +65,10 @@ class Client(object):
         if self._logged_in == True:
             raise InfiniteCampusExceptions.LoginExceptions.UserAlreadyLoggedInError
         
-        get_district = self.http.session.get(url=f"https://mobile.infinitecampus.com/api/district/searchDistrict?query={district_name}&state={state_abbreviation}").json()
+        if state not in state_abbreviations:
+            raise InfiniteCampusExceptions.LoginExceptions.InvalidState
+        
+        get_district = self.http.session.get(url=f"https://mobile.infinitecampus.com/api/district/searchDistrict?query={district_name}&state={state}").json()
         
         if len(get_district["data"]) == 0:
             raise InfiniteCampusExceptions.LoginExceptions.NoDistrictFound
