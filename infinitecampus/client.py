@@ -34,25 +34,26 @@ class Client(object):
         else:
             self.http.last_interaction_timestamp = current_time
     
-    """
-    Logs into a student campus portal.
-
-    Inputs:
-    - username (string): The username for the student.
-    - password (string): The password for the student.
-    - district_name (string): This is the name of the school district. Ex: "Central Vermont Career Center School District"
-    - state_abbreviation (string): The abbreviation for the school district's state. Ex: Vermont --> VT
-
-    Output:
-    - Boolean: True if logging in was successful.
-
-    Operations:
-    - Inputs district_name and state_addreviation are used to request district information. 
-    - This district info is then stored and used for all future wrapper and api operations.
-    - A request is then made to log in. All cookies are stored in the session being used.
-    - Then it checks if the log in was successful, and if it is, returns True.
-    """
+    
     def log_in(self, username: str, password: str, district_name: str, state_abbreviation: str) -> bool:
+        """
+        Logs into a student campus portal.
+
+        Inputs:
+        - username (string): The username for the student.
+        - password (string): The password for the student.
+        - district_name (string): This is the name of the school district. Ex: "Central Vermont Career Center School District"
+        - state_abbreviation (string): The abbreviation for the school district's state. Ex: Vermont --> VT
+
+        Output:
+        - Boolean: True if logging in was successful.
+
+        Operations:
+        - Inputs district_name and state_addreviation are used to request district information. 
+        - This district info is then stored and used for all future wrapper and api operations.
+        - A request is then made to log in. All cookies are stored in the session being used.
+        - Then it checks if the log in was successful, and if it is, returns True.
+        """
         if self._logged_in == True:
             raise InfiniteCampusExceptions.LoginExceptions.UserAlreadyLoggedInError
         
