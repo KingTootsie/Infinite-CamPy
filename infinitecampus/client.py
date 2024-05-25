@@ -52,7 +52,7 @@ class Client(object):
     - A request is then made to log in. All cookies are stored in the session being used.
     - Then it checks if the log in was successful, and if it is, returns True.
     """
-    def login(self, username: str, password: str, district_name: str, state_abbreviation: str) -> bool:
+    def log_in(self, username: str, password: str, district_name: str, state_abbreviation: str) -> bool:
         if self._logged_in == True:
             raise InfiniteCampusExceptions.LoginExceptions.UserAlreadyLoggedInError
         
@@ -73,7 +73,8 @@ class Client(object):
             "lang": "en",
             "portalLoginPage": "students"
         }
-
+        
+        #Check status code?
         verify_response = self.http.session.post(url=f"{district_site}verify.jsp", headers={"User-Agent": "Infinite-Campy - v.1"}, data=data)
         
         cookie_names = []
@@ -90,7 +91,7 @@ class Client(object):
             #print("Successfully logged in.")
             return True
     
-    def logout(self):
+    def log_out(self) -> bool:
         if not self._logged_in:
             raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError(message="You must log in before trying to log out.")
         
