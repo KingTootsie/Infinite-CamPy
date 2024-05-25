@@ -5,6 +5,7 @@ Example usage:
 
 ```
 import infinitecampus
+
 #Initialize a new client instance\n
 ic = client.client()
 
