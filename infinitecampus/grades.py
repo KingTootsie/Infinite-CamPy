@@ -2,12 +2,11 @@ from typing import TYPE_CHECKING
 import datetime, time
 from infinitecampus import InfiniteCampusExceptions
 #from infinitecampus import (NAME_SEARCH, COURSE_ID_SEARCH)
-from infinitecampus.schoolObjects import *
+from infinitecampus.schoolObjects.gradeObjects import *
 
 if TYPE_CHECKING:
     from .client import Client
 
-#
 class Grades():
         def __init__(self, client) -> None:
             self.client: Client = client

@@ -1,6 +1,4 @@
-import os.path
-import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+"""Holds all the exceptions that can be raised."""
 
 class LoginExceptions:
     class NotLoggedInError(Exception):
