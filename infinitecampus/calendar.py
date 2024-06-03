@@ -16,7 +16,7 @@ class Calendar():
         self.client.check_session_validity()
 
         #Might need to move the exception checks to here.
-        calendar_json = self.client.http.fetch_calendar()
+        calendar_json = self.client.http.calendar.fetch_calendar()
 
         day_list = []
         for day_json in calendar_json:
@@ -36,7 +36,8 @@ class Calendar():
         
     
     def fetch_day(self, date: str):
-        """date is in (YYYY-MM-DD) format"""
+        """NOTE! RETURNS RAW JSON!"""
+        #"""date is in (YYYY-MM-DD) format"""
 
         if not self.client._logged_in:
             raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError

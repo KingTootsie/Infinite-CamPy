@@ -24,7 +24,7 @@ class Grades():
             
             self.client.check_session_validity()
 
-            grades_json = self.client.http.fetch_grades()
+            grades_json = self.client.http.grades.fetch_grades()
 
             #Enrollments
             enrollments_list: list[Enrollment] = []
@@ -82,7 +82,7 @@ class Grades():
 
                         #Tasks
                         #Gets assignment info
-                        tasks_json = self.client.http.fetch_course_details(sectionID=current_course.section_id)
+                        tasks_json = self.client.http.grades.fetch_course_details(sectionID=current_course.section_id)
                         
                         task_list: list[Task] = []
                         for task in tasks_json["details"]:
@@ -231,6 +231,7 @@ class Grades():
             return recent_grades
         
         
+        #OLD FUNC
         def fetch_class(self, class_name: str, term:int) -> dict:
             if not self.client._logged_in:
                 raise InfiniteCampusExceptions.LoginExceptions.NotLoggedInError
